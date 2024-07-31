@@ -27,14 +27,12 @@ public class Calculator implements ActionListener{
     JButton[] numbers = new JButton [10];
     JButton[] operators = new JButton [9];
 
-    //figure out a different font to use
-    Font myFont = new Font("PLAIN", Font.BOLD, 30);
-
     //variables for the numbers that the user will choose on the calculator and their result
     double firstNumber = 0;
     double secondNumber = 0;
     double result = 0;
 
+    //variable for the math operator that was clicked by the user
     char operatorChar;
     
     //constructor for the calculator
@@ -49,7 +47,7 @@ public class Calculator implements ActionListener{
         //creating the field at the top of the calculator where numbers will appear
         textField = new JTextField();
         textField.setBounds(50, 25, 300, 50);
-        textField.setFont(myFont);
+        textField.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         textField.setEditable(false);
 
         //linking the operators to a button with its respective symbol
@@ -77,28 +75,27 @@ public class Calculator implements ActionListener{
         //for loop that makes the operator buttons usable by the user
         for (int i = 0; i < 9; i++) {
             operators[i].addActionListener(this);
-            operators[i].setFont(myFont);
+            operators[i].setFont(new Font("Sans-Serif", Font.BOLD, 20));
         }
 
         //for loop that makes number buttons for each number from 0-9 and makes them usable by the user
         for (int i = 0; i < 10; i++) {
             numbers[i] = new JButton(String.valueOf(i));
             numbers[i].addActionListener(this);
-            numbers[i].setFont(myFont);
+            numbers[i].setFont(new Font("Sans-Serif", Font.BOLD, 20));
         }
 
-        //setting the position of the clear and delete buttons
+        //setting the position of the clear, delete, and negative buttons
         clearButton.setBounds(0, 430, 150, 50);
         deleteButton.setBounds(150, 430, 150, 50);
         negativeButton.setBounds(300, 430, 150, 50);
 
-        //setting a panel for the number buttons
+        //creating a panel for the number buttons
         panel = new JPanel();
         panel.setBounds(50,100, 300, 300);
         panel.setLayout(new GridLayout(4, 4, 10, 10));
-        //panel.setBackground(Color.LIGHT_GRAY);
 
-        //adding the numbers and operators to the calculator
+        //adding the numbers and operators to the panel
         panel.add(numbers[7]);
         panel.add(numbers[8]);
         panel.add(numbers[9]);
@@ -116,7 +113,7 @@ public class Calculator implements ActionListener{
         panel.add(decimalButton);
         panel.add(divideButton);
         
-        //adding all of the buttons and fields to the calculator frame and making it visible
+        //adding the panel and all of the buttons and fields to the calculator frame and making it visible
         frame.add(panel);
         frame.add(textField);
         frame.add(negativeButton);
@@ -175,7 +172,6 @@ public class Calculator implements ActionListener{
             textField.setText(textField.getText().concat("9"));
         }
         
-
         //making the decimal appear in the textField
         if (buttonClicked.getSource() == decimalButton) {
                 
@@ -204,12 +200,16 @@ public class Calculator implements ActionListener{
         //storing the first number inputted when the respective operator buttons are clicked, and then clearing the text field
         if (buttonClicked.getSource() == additionButton) {
 
+            //if the counter is not zero, then more than two numbers are being added, subtracted, multiplied, or divided
             if (counter != 0){
 
+                //the second number is set to whatever was just inputted to the textfield by the user
                 secondNumber = Double.parseDouble(textField.getText());
+                //the new first number is made the result of the second number and the first number that was inputted being added
                 firstNumber = firstNumber + secondNumber;
                 textField.setText("");
-                
+            
+            //if the counter is zero, than an operator button has only just been clicked, meaning there are not more than two numbers being done math on
             } else {
                 
                 firstNumber = Double.parseDouble(textField.getText());
@@ -218,14 +218,18 @@ public class Calculator implements ActionListener{
                 counter++;
             }
         }
-        if (buttonClicked.getSource() == subtractButton) {
-                
-            if (counter != 0){
 
+        if (buttonClicked.getSource() == subtractButton) {
+            
+            //if the counter is not zero, then more than two numbers are being added, subtracted, multiplied, or divided
+            if (counter != 0){
+                //the second number is set to whatever was just inputted to the textfield by the user
                 secondNumber = Double.parseDouble(textField.getText());
+                //the new first number is the result of the first number and the second number that was inputted being subtracted
                 firstNumber = firstNumber - secondNumber;
                 textField.setText("");
-                
+            
+            //if the counter is zero, than an operator button has only just been clicked, meaning there are not more than two numbers being done math on
             } else {
                 
                 firstNumber = Double.parseDouble(textField.getText());
@@ -235,13 +239,16 @@ public class Calculator implements ActionListener{
             }
         }
         if (buttonClicked.getSource() == multiplyButton) {
-                
+             
+            //if the counter is not zero, then more than two numbers are being added, subtracted, multiplied, or divided
             if (counter != 0){
-
+                //the second number is set to whatever was just inputted to the textfield by the user
                 secondNumber = Double.parseDouble(textField.getText());
+                //the new first number is the result of the first number and the second number being multiplied
                 firstNumber = firstNumber * secondNumber;
                 textField.setText("");
                 
+            //if the counter is zero, than an operator button has only just been clicked, meaning there are not more than two numbers being done math on
             } else {
                 
                 firstNumber = Double.parseDouble(textField.getText());
@@ -251,13 +258,16 @@ public class Calculator implements ActionListener{
             }
         }
         if (buttonClicked.getSource() == divideButton) {
-                
+            
+            //if the counter is not zero, then more than two numbers are being added, subtracted, multiplied, or divided
             if (counter != 0){
-
+                //the second number is set to whatever was just inputted to the textfield by the user
                 secondNumber = Double.parseDouble(textField.getText());
+                //the new first number is the result of the first number divided by the second number
                 firstNumber = firstNumber / secondNumber;
                 textField.setText("");
-                
+            
+            //if the counter is zero, than an operator button has only just been clicked, meaning there are not more than two numbers being done math on     
             } else {
                 
                 firstNumber = Double.parseDouble(textField.getText());
